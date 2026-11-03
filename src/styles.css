@@ -348,3 +348,15 @@
 .timeline-body:active{cursor:grabbing!important}
 .timeline-body .bar{cursor:pointer}
 @media(pointer:coarse){.gantt-layout,.timeline-body{cursor:auto!important;user-select:auto}}
+
+
+/* Column visibility controls: collapsed columns keep a compact restore slot. */
+.gantt-layout{--gantt-cols:25px 32px minmax(110px,1fr) 62px 82px}
+.left-head,.data-row{grid-template-columns:var(--gantt-cols)!important}
+.column-head{position:relative;box-sizing:border-box;min-width:0;height:100%;display:flex;align-items:center;padding-right:22px!important;overflow:visible}
+.column-head>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.column-head>button{position:absolute;top:2px;right:2px;width:17px;height:17px;display:grid;place-items:center;padding:0;border:1px solid #d5dfeb;border-radius:5px;background:#fff;color:#52657d;font-size:13px;line-height:1;cursor:pointer;z-index:4}
+.column-head>button:hover{background:#edf4ff;border-color:#9eb9df;color:#245da8}
+.column-head.is-hidden{padding:0!important;justify-content:center}
+.column-head.is-hidden>button{top:2px;right:50%;transform:translateX(50%)}
+.stage-bar-row .bar{background:#edf1f6!important;border:1px solid #cbd5e1!important;box-sizing:border-box}
