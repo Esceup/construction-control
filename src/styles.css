@@ -365,26 +365,3 @@
 .gantt-layout{grid-template-columns:minmax(390px,48%) minmax(0,1fr)!important}
 @media(max-width:900px){.left-head,.data-row{grid-template-columns:20px 24px minmax(95px,1.5fr) 34px minmax(68px,1fr) 58px!important}.col-people,.col-contractor,.col-budget{font-size:8px;padding:0 2px}.bar-percent{font-size:8px}}
 @media(max-width:640px){.gantt-layout{grid-template-columns:minmax(0,1fr) minmax(125px,1fr)!important}.left-head,.data-row{grid-template-columns:18px 20px minmax(75px,1.5fr) 27px minmax(54px,1fr) 50px!important}.col-people,.col-contractor,.col-budget{font-size:7px}.bar-percent{font-size:7px}.timeline-slider{height:30px;padding:0 8px;gap:6px}.timeline-slider span{font-size:8px}}
-
-/* Column header toggles, contractor/person combined cell, chart-side budget */
-.column-head{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;padding:0 16px 0 4px}
-.column-head button{position:absolute;right:2px;top:2px;width:13px;height:13px;padding:0;border:0;border-radius:3px;background:#edf1f6;color:#68778b;font-size:12px;line-height:11px;cursor:pointer}
-.col-contractor{display:flex;flex-direction:column;justify-content:center;min-width:0;line-height:1.1}
-.col-contractor small{font-size:8px;color:#98a3b2;margin-top:2px}
-.col-budget{width:max-content;min-width:max-content;white-space:nowrap;padding-left:7px;padding-right:7px}
-.left-head,.data-row{grid-template-columns:25px 32px minmax(130px,1fr) minmax(82px,max-content) max-content!important}
-.bar-budget{position:absolute;top:50%;transform:translateY(-50%);font-size:8px;color:#66758a;white-space:nowrap;font-variant-numeric:tabular-nums;pointer-events:none}
-.timeline-body{cursor:grab!important;user-select:none!important;touch-action:pan-y}
-.timeline-body:active{cursor:grabbing!important}
-@media(max-width:900px){.col-contractor small{font-size:7px}.column-head button{width:12px;height:12px}.bar-budget{font-size:7px}}
-
-
-/* v0.2.1 — compact left columns and full planned-duration track */
-.left-head,.data-row{grid-template-columns:25px 32px minmax(0,1fr) max-content max-content!important}
-.col-contractor{width:max-content;max-width:190px;min-width:0;padding-left:7px;padding-right:7px}
-.col-budget{width:max-content;min-width:0;padding-left:7px;padding-right:7px}
-.bar,.bar.done,.bar.doing,.bar.todo,.bar.late,.stage-bar-row .bar{background:#edf1f5!important;border:1px solid #d5dce5!important;box-sizing:border-box;overflow:hidden!important}
-.bar-fill{height:100%!important;top:0!important;bottom:0!important;transform:none!important;border-radius:99px!important;opacity:1!important}
-.bar-budget{display:none!important}
-@media(max-width:900px){.col-contractor{max-width:120px}.col-budget{padding-left:3px;padding-right:3px}}
-@media(max-width:640px){.left-head,.data-row{grid-template-columns:18px 20px minmax(0,1fr) max-content max-content!important}.col-contractor{max-width:78px}}
