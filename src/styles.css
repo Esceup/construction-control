@@ -377,3 +377,14 @@
 .timeline-body{cursor:grab!important;user-select:none!important;touch-action:pan-y}
 .timeline-body:active{cursor:grabbing!important}
 @media(max-width:900px){.col-contractor small{font-size:7px}.column-head button{width:12px;height:12px}.bar-budget{font-size:7px}}
+
+
+/* v0.2.1 — compact left columns and full planned-duration track */
+.left-head,.data-row{grid-template-columns:25px 32px minmax(0,1fr) max-content max-content!important}
+.col-contractor{width:max-content;max-width:190px;min-width:0;padding-left:7px;padding-right:7px}
+.col-budget{width:max-content;min-width:0;padding-left:7px;padding-right:7px}
+.bar,.bar.done,.bar.doing,.bar.todo,.bar.late,.stage-bar-row .bar{background:#edf1f5!important;border:1px solid #d5dce5!important;box-sizing:border-box;overflow:hidden!important}
+.bar-fill{height:100%!important;top:0!important;bottom:0!important;transform:none!important;border-radius:99px!important;opacity:1!important}
+.bar-budget{display:none!important}
+@media(max-width:900px){.col-contractor{max-width:120px}.col-budget{padding-left:3px;padding-right:3px}}
+@media(max-width:640px){.left-head,.data-row{grid-template-columns:18px 20px minmax(0,1fr) max-content max-content!important}.col-contractor{max-width:78px}}
