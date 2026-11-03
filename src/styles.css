@@ -49,7 +49,7 @@
  .gantt-toolbar{padding:9px 9px 7px;gap:7px}.toolbar-left h2{font-size:14px}.task-count{font-size:9px}.toolbar-right{gap:4px}.search-box{height:29px;min-width:90px}.search-box input{font-size:10px}.segmented button{padding:4px 6px;font-size:9px}.square{width:28px;height:29px}.today-btn{height:29px;font-size:10px}
  .legend{height:30px;padding:0 9px;gap:9px;font-size:9px}.mobile-hint{display:flex!important;color:#7a8798;font-size:9px}
  .gantt-layout{display:grid;height:calc(100dvh - 345px);min-height:300px;max-height:none;overflow:hidden}
- .left-pane{width:122px;border-right:1px solid #e5eaf1}
+ .left-pane{border-right:1px solid #e5eaf1}
  .left-head{height:38px;}.left-head .col-name{font-size:9px}
  .data-row{height:38px;position:relative}.data-row .col-name{padding:0;height:100%;display:flex;flex-direction:column;justify-content:center}.col-name>span,.stage-row .col-name>span{font-size:9px;line-height:1.15;-webkit-line-clamp:2}.col-name small{font-size:7px;margin-top:1px}
  .right-pane{display:flex;min-width:0;overflow:hidden}.timeline-head{height:38px}.timeline-body{overflow:auto;min-width:0;touch-action:pan-x pan-y}.timeline-inner{min-height:100%}.bar-row{height:38px}.stage-bar-row{height:38px}.bar{height:17px;top:10px}.stage-bar-row .bar{top:10px;height:17px}.month-cell{padding:10px 3px 0;font-size:8px;line-height:1}
@@ -86,7 +86,6 @@
  .page-head,.summary-grid,.bottom-hint,.desktop-nav{margin-left:10px;margin-right:10px}
  .gantt-card{border-radius:0;border-left:0;border-right:0}
  .gantt-layout{height:calc(100dvh - 340px);min-height:340px;width:100%;overflow:hidden}
- .left-pane{min-width:112px}
  .data-row{height:38px}
  .bar-row,.stage-bar-row{height:38px}
  .right-pane{min-width:0}
@@ -114,7 +113,6 @@
 .bar-row,.stage-bar-row{flex:none}
 @media(max-width:640px){
   .gantt-layout{ height:calc(100dvh - 345px); min-height:300px; max-height:none; overflow-y:auto; overflow-x:hidden; touch-action:pan-y;}
-  .left-pane{ min-width:0}
   .right-pane{display:block; min-width:0; overflow:visible}
   .left-head,.timeline-head{position:sticky; top:0; z-index:9}
   .left-rows{overflow:visible; height:max-content}
@@ -173,7 +171,6 @@
 @media(max-width:900px){.gantt-layout{height:calc(100vh - 350px)!important}}
 @media(max-width:640px){
  .gantt-layout{height:calc(100dvh - 345px)!important;min-height:300px;max-height:none;overflow-y:auto!important;overflow-x:hidden!important;touch-action:pan-y!important}
- .left-pane{min-width:0!important}
  .left-head{height:38px!important}.data-row{height:38px!important;min-height:38px}.stage-row{height:36px!important;min-height:36px}
  .col-check{width:18px}.col-name{padding:0 2px!important}.col-name>span,.stage-row .col-name>span{font-size:8px!important;line-height:1.12}.col-name small{font-size:7px!important}
  .right-pane{display:block!important;min-width:0!important;overflow:visible!important}.timeline-head{height:38px!important}.timeline-body{height:max-content!important;overflow-x:auto!important;overflow-y:hidden!important;touch-action:pan-x pan-y!important;-webkit-overflow-scrolling:touch}
@@ -220,7 +217,6 @@
 }
 @media(max-width:640px){
  .gantt-layout{height:calc(100dvh - 345px)!important;min-height:300px;max-height:none;overflow-x:hidden!important;overflow-y:auto!important;touch-action:pan-y!important}
- .left-pane{min-width:0!important}
  .left-head{height:38px!important}.data-row{height:38px!important;min-height:38px}.stage-row{height:36px!important;min-height:36px}
  .right-pane{display:flex!important;min-width:0!important;overflow:visible!important}
  .timeline-head{height:38px!important}.timeline-body{height:auto!important;overflow-x:auto!important;overflow-y:hidden!important;touch-action:pan-x pan-y!important;-webkit-overflow-scrolling:touch}
@@ -359,22 +355,13 @@
 .column-settings-menu label{display:flex;align-items:center;gap:8px;font-size:12px;color:#354256;cursor:pointer}
 .column-settings-menu input{width:14px;height:14px;margin:0;accent-color:#2866c5}
 @media(min-width:641px){
- .left-pane{min-width:0!important}
  .left-head>div,.data-row>div{min-width:0}
 }
 
 /* Column settings modal and dedicated workforce column */
 .column-modal{max-width:440px}.column-modal-hint{font-size:12px;color:#748195;margin:0 0 14px}.column-modal-options{display:flex;flex-direction:column;gap:13px;padding:4px 0 12px}.column-modal-options label{display:flex;align-items:center;gap:10px;font-size:13px;color:#354256;cursor:pointer}.column-modal-options input{width:16px;height:16px;margin:0;accent-color:#2866c5}.stage-number{display:flex;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:700;color:#536174}.stage-number .collapse{display:grid;place-items:center;padding:0;border:0;background:transparent;color:#64748b;cursor:pointer}.col-workforce{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:0 7px;overflow:hidden;font-size:9px;color:#43536a}.col-workforce>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.col-workforce small{font-size:8px;color:#8793a3;white-space:nowrap}.left-head .col-workforce{font-size:9px;font-weight:600;color:#65748a;white-space:normal;line-height:1.1}@media(max-width:640px){.stage-number{font-size:8px}}
 
-/* Alignment fix: one shared column grid for header and every task row. */
-@media(min-width:641px){
- .gantt-layout>.left-pane{min-width:0!important;box-sizing:border-box!important}
- .left-head,.data-row{min-width:0!important;box-sizing:border-box!important}
- .left-head>div,.data-row>div{box-sizing:border-box!important;min-width:0!important}
- .left-head .col-check,.data-row .col-check{width:auto!important;min-width:0!important}
- .left-head .col-name,.data-row .col-name{width:auto!important;min-width:0!important}
- .left-head .col-num,.data-row .col-num,.left-head .col-workforce,.data-row .col-workforce,.left-head .col-progress,.data-row .col-progress,.left-head .col-money,.data-row .col-money{width:auto!important;min-width:0!important}
-}
+
 
 /* Gantt column grid: one ordered set of tracks for header and all data rows. */
 .gantt-layout {
@@ -382,9 +369,7 @@
   grid-template-columns: var(--gantt-left-width) minmax(0, 1fr);
 }
 .gantt-layout > .left-pane {
-  width: auto;
   min-width: 0;
-  max-width: none;
   box-sizing: border-box;
 }
 .left-head,
