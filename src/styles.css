@@ -312,3 +312,39 @@
 }
 .bar.done,.bar.doing,.bar.todo,.bar.late{background:#f0f3f7!important}
 .quarter-cell{box-sizing:border-box;height:100%;display:flex;align-items:center;justify-content:center;border-left:1px solid #d5dce6;border-right:1px solid #e6ebf1;color:#52647b;font-size:9px;font-weight:700;white-space:nowrap;overflow:hidden;background:rgba(238,242,247,.55)}
+
+/* v0.1.9 — clean progress bars, readable compact labels and drag scrolling */
+.bar,.bar.done,.bar.doing,.bar.todo,.bar.late,.stage-bar-row .bar{
+ background:transparent!important;border:0!important;box-shadow:none!important;outline:0!important;
+ height:6px!important;min-height:6px!important;top:50%!important;transform:translateY(-50%);
+ padding:0!important;border-radius:99px!important;overflow:visible!important;
+}
+.bar-fill{height:6px!important;top:0!important;bottom:0!important;transform:none!important;opacity:1!important;border-radius:99px!important}
+.bar-label,.bar-progress{display:none!important}
+@media(min-width:901px){
+ .data-row,.bar-row{height:34px!important;min-height:34px!important}
+ .stage-row,.stage-bar-row{height:36px!important;min-height:36px!important}
+ .col-name>span,.stage-row .col-name>span{font-size:10px!important;line-height:1.2!important;-webkit-line-clamp:2;max-height:2.4em}
+ .col-name small{font-size:8px!important}
+ .mobile-sub{display:none!important}
+}
+@media(max-width:900px){
+ .data-row,.bar-row{height:42px!important;min-height:42px!important}
+ .stage-row,.stage-bar-row{height:36px!important;min-height:36px!important}
+ .col-name{min-width:0!important}
+ .col-name>span,.stage-row .col-name>span{font-size:9px!important;line-height:1.18!important;-webkit-line-clamp:2;max-height:2.36em;overflow:hidden}
+ .desktop-sub{display:none!important}
+ .mobile-sub{display:block!important;font-size:7px!important;line-height:1.1!important;color:#7c899a!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+}
+@media(max-width:640px){
+ .data-row,.bar-row{height:44px!important;min-height:44px!important}
+ .stage-row,.stage-bar-row{height:37px!important;min-height:37px!important}
+ .col-name>span,.stage-row .col-name>span{font-size:9px!important}
+ .mobile-sub{font-size:7px!important}
+}
+.gantt-layout{cursor:grab!important;user-select:none}
+.gantt-layout:active{cursor:grabbing!important}
+.timeline-body{cursor:grab!important;user-select:none}
+.timeline-body:active{cursor:grabbing!important}
+.timeline-body .bar{cursor:pointer}
+@media(pointer:coarse){.gantt-layout,.timeline-body{cursor:auto!important;user-select:auto}}
