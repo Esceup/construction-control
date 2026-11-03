@@ -244,3 +244,14 @@
  .add-stage-task{right:0;width:22px;height:22px}
  .data-row.stage-row .col-name{padding-right:24px}
 }
+
+
+/* v0.1.6 — calendar labels, aligned controls and smooth desktop wheel scrolling */
+.month-cell{display:flex;align-items:flex-start;justify-content:center;white-space:nowrap;overflow:hidden;padding:12px 2px 0!important;font-size:9px!important;line-height:1.1}
+.week-tick{box-sizing:border-box;white-space:nowrap;overflow:hidden;padding:0 3px;text-align:center;font-variant-numeric:tabular-nums}
+.add-stage-task{display:flex!important;align-items:center!important;justify-content:center!important;line-height:1!important;padding:0!important;box-sizing:border-box}
+.add-stage-task svg{display:block;flex:none;width:16px;height:16px;stroke-width:2}
+.timeline-head{overflow:hidden!important;scrollbar-width:none}
+.timeline-head::-webkit-scrollbar{display:none}
+.timeline-body{scroll-behavior:auto;scrollbar-gutter:stable}
+@media(min-width:901px){.gantt-layout{scroll-behavior:auto}.timeline-body{cursor:ew-resize}}
