@@ -11,8 +11,7 @@ export function GanttStageRow({kind,stage,task,collapsed,editMode,selected,onTog
   <div className="col-check">{kind==='task'&&editMode&&<input type="checkbox" checked={selected} onClick={e=>e.stopPropagation()} onChange={e=>onSelectToggle(e.target.checked)}/>}</div>
   <div className="col-num" style={{display:columns.number?undefined:"none"}}>{kind==='stage'?<button className="collapse" onClick={e=>{e.stopPropagation();onToggle()}}>{collapsed?<ChevronRight size={16}/>:<ChevronDown size={16}/>}</button>:<span className="task-num">{task.id}</span>}</div>
   <div className="col-name" style={{display:columns.name?undefined:"none"}}><span title={task.name} className={kind==='task'?'child-name':''}>{task.name}</span>{kind==='task'&&<small>{task.people} чел.</small>}{kind==='stage'&&<div className="stage-actions"><button className="stage-action-btn" aria-label="Переименовать этап" onClick={e=>{e.stopPropagation();onRename()}}><Pencil size={13}/></button><button className="add-stage-task" aria-label="Добавить работу в этап" onClick={e=>{e.stopPropagation();onAdd()}}><Plus size={16}/></button></div>}</div>
-  <div className="col-people" style={{display:columns.people?undefined:"none"}}>{kind==='task'?task.people:'—'}</div>
-  <div className="col-contractor" style={{display:columns.contractor?undefined:"none"}}>{kind==='task'?task.contractor:'—'}</div>
+  <div className="col-contractor" style={{display:columns.contractor?undefined:"none"}}><span>{kind==='task'?task.contractor:'—'}</span>{kind==='task'&&<small>{task.people} чел.</small>}</div>
   <div className="col-budget" style={{display:columns.budget?undefined:"none"}}>{money(task.budget)}</div>
  </div>;
 }
