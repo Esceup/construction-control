@@ -358,5 +358,15 @@
 .column-head>button{position:absolute;top:2px;right:2px;width:17px;height:17px;display:grid;place-items:center;padding:0;border:1px solid #d5dfeb;border-radius:5px;background:#fff;color:#52657d;font-size:13px;line-height:1;cursor:pointer;z-index:4}
 .column-head>button:hover{background:#edf4ff;border-color:#9eb9df;color:#245da8}
 .column-head.is-hidden{padding:0!important;justify-content:center}
-.column-head.is-hidden>button{top:2px;right:50%;transform:translateX(50%)}
+.column-head.is-hidden>button{top:2px;right:2px;transform:none}
 .stage-bar-row .bar{background:#edf1f6!important;border:1px solid #cbd5e1!important;box-sizing:border-box}
+
+@media(max-width:640px){
+ .gantt-layout{grid-template-columns:var(--gantt-cols)!important}
+ .left-head,.data-row{grid-template-columns:var(--gantt-cols)!important;padding:0 4px!important}
+ .left-head .col-num,.left-head .col-progress,.left-head .col-money{display:flex!important}
+ .data-row .col-num,.data-row .col-progress,.data-row .col-money{display:block!important}
+ .column-head{padding-right:19px!important}
+ .column-head>button{width:15px;height:15px;font-size:11px}
+ .column-head.is-hidden{padding:0!important}
+}
