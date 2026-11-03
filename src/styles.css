@@ -388,3 +388,14 @@
 
 /* Column settings modal and dedicated workforce column */
 .column-modal{max-width:440px}.column-modal-hint{font-size:12px;color:#748195;margin:0 0 14px}.column-modal-options{display:flex;flex-direction:column;gap:13px;padding:4px 0 12px}.column-modal-options label{display:flex;align-items:center;gap:10px;font-size:13px;color:#354256;cursor:pointer}.column-modal-options input{width:16px;height:16px;margin:0;accent-color:#2866c5}.stage-number{display:flex;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:700;color:#536174}.stage-number .collapse{display:grid;place-items:center;padding:0;border:0;background:transparent;color:#64748b;cursor:pointer}.col-workforce{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:0 7px;overflow:hidden;font-size:9px;color:#43536a}.col-workforce>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.col-workforce small{font-size:8px;color:#8793a3;white-space:nowrap}.left-head .col-workforce{font-size:9px;font-weight:600;color:#65748a;white-space:normal;line-height:1.1}@media(max-width:640px){.gantt-layout{grid-template-columns:112px minmax(0,1fr)!important}.left-head,.data-row{grid-template-columns:18px 0 minmax(0,1fr) 0 0 0!important}.left-head .col-workforce,.data-row .col-workforce{display:none!important}.stage-number{font-size:8px}}
+
+/* Alignment fix: one shared column grid for header and every task row. */
+@media(min-width:641px){
+ .gantt-layout{grid-template-columns:var(--gantt-left-width) minmax(0,1fr)!important}
+ .gantt-layout>.left-pane{width:var(--gantt-left-width)!important;min-width:0!important;max-width:var(--gantt-left-width)!important;box-sizing:border-box!important}
+ .left-head,.data-row{display:grid!important;grid-template-columns:var(--gantt-cols)!important;width:100%!important;min-width:0!important;box-sizing:border-box!important}
+ .left-head>div,.data-row>div{box-sizing:border-box!important;min-width:0!important}
+ .left-head .col-check,.data-row .col-check{width:auto!important;min-width:0!important}
+ .left-head .col-name,.data-row .col-name{width:auto!important;min-width:0!important}
+ .left-head .col-num,.data-row .col-num,.left-head .col-workforce,.data-row .col-workforce,.left-head .col-progress,.data-row .col-progress,.left-head .col-money,.data-row .col-money{width:auto!important;min-width:0!important}
+}
