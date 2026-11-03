@@ -292,4 +292,3 @@
  .bar{height:18px!important;top:8px!important}
  .stage-bar-row .bar{height:18px!important;top:8px!important}
 }
-@media(prefers-reduced-motion:no-preference){.timeline-body{scroll-behavior:smooth}}
