@@ -268,3 +268,5 @@
 .task-modal .field-label{display:block;min-width:0}
 .edit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(max-width:520px){.edit-grid{grid-template-columns:minmax(0,1fr)}.stage-actions{gap:2px}.stage-action-btn,.add-stage-task{width:21px;height:21px;flex-basis:21px}.data-row.stage-row .col-name{padding-right:48px!important}}
+
+.stage-name-modal{max-width:460px}.stage-name-modal .field-label{margin:12px 0 20px}.stage-name-modal input{height:40px;padding:0 11px;border:1px solid #dfe5ed;border-radius:7px;font:inherit;margin-top:8px}.stage-name-modal .primary:disabled{opacity:.45;cursor:not-allowed}
