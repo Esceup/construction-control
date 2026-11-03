@@ -11,7 +11,8 @@ export function GanttDateHeader({ scale, start, maxEnd, days, px }: Props) {
    const monthEnd = new Date(cursor.getFullYear(),cursor.getMonth()+1,0);
    const span = Math.min(Math.round((monthEnd.getTime()-cursor.getTime())/DAY)+1,Math.round((maxEnd.getTime()-cursor.getTime())/DAY)+1);
    const label = cursor.toLocaleDateString('ru-RU',{month:'short'}).replace('.','')+' '+String(cursor.getFullYear()).slice(-2);
-   cells.push(<div className="month-cell" style={{width:span*px}} key={iso(cursor)}>{label}</div>);
+   const left=Math.round((cursor.getTime()-start.getTime())/DAY*px);
+   cells.push(<div className="month-cell" style={{position:'absolute',left,width:span*px}} key={iso(cursor)}>{label}</div>);
    cursor = new Date(cursor.getFullYear(),cursor.getMonth()+1,1);
   }
   return <>{cells}</>;

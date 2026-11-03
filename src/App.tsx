@@ -65,18 +65,20 @@ export default function App(){
   const horizontal=e.shiftKey||Math.abs(e.deltaX)>Math.abs(e.deltaY);
   if(!horizontal&&Math.abs(e.deltaY)<1)return;
   e.preventDefault();
+  const unit=e.deltaMode===1?16:e.deltaMode===2?Math.max(1,e.currentTarget.clientHeight):1;
+  const deltaX=e.deltaX*unit,deltaY=e.deltaY*unit;
   const timeline=timelineRef.current,layout=layoutRef.current;
   if(!timeline||!layout)return;
   const current=wheelTargetRef.current??{x:timeline.scrollLeft,y:layout.scrollTop};
   wheelTargetRef.current=horizontal
-   ?{x:Math.max(0,Math.min(timeline.scrollWidth-timeline.clientWidth,current.x+(e.deltaX||e.deltaY))),y:layout.scrollTop}
-   :{x:timeline.scrollLeft,y:Math.max(0,Math.min(layout.scrollHeight-layout.clientHeight,current.y+e.deltaY))};
+   ?{x:Math.max(0,Math.min(timeline.scrollWidth-timeline.clientWidth,current.x+(deltaX||deltaY))),y:layout.scrollTop}
+   :{x:timeline.scrollLeft,y:Math.max(0,Math.min(layout.scrollHeight-layout.clientHeight,current.y+deltaY))};
   if(wheelFrameRef.current!==null)return;
   const animate=()=>{
    const target=wheelTargetRef.current;
    if(!target){wheelFrameRef.current=null;return;}
    const dx=target.x-timeline.scrollLeft,dy=target.y-layout.scrollTop;
-   timeline.scrollLeft+=dx*.22;layout.scrollTop+=dy*.22;
+   timeline.scrollLeft+=dx*.18;layout.scrollTop+=dy*.18;
    if(Math.abs(dx)<.6&&Math.abs(dy)<.6){
     timeline.scrollLeft=target.x;layout.scrollTop=target.y;
     wheelTargetRef.current=null;wheelFrameRef.current=null;return;

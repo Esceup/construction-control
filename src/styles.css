@@ -270,3 +270,26 @@
 @media(max-width:520px){.edit-grid{grid-template-columns:minmax(0,1fr)}.stage-actions{gap:2px}.stage-action-btn,.add-stage-task{width:21px;height:21px;flex-basis:21px}.data-row.stage-row .col-name{padding-right:48px!important}}
 
 .stage-name-modal{max-width:460px}.stage-name-modal .field-label{margin:12px 0 20px}.stage-name-modal input{height:40px;padding:0 11px;border:1px solid #dfe5ed;border-radius:7px;font:inherit;margin-top:8px}.stage-name-modal .primary:disabled{opacity:.45;cursor:not-allowed}
+
+/* Gantt density and calendar positioning — v0.1.8 */
+@media(min-width:901px){
+ .gantt-layout{height:min(720px,calc(100dvh - 340px));min-height:430px}
+ .left-head,.timeline-head{height:40px}
+ .data-row{height:32px;min-height:32px}
+ .stage-row{height:34px;min-height:34px}
+ .bar-row{height:32px;min-height:32px}
+ .stage-bar-row{height:34px;min-height:34px}
+ .bar{height:18px;top:7px}
+ .stage-bar-row .bar{height:18px;top:8px}
+ .col-name>span,.stage-row .col-name>span{font-size:10px}
+ .col-name small,.col-money small{margin-top:1px}
+}
+.month-cell{box-sizing:border-box;flex:none;min-width:0;height:100%;display:flex;align-items:flex-start;justify-content:center;text-align:center;overflow:hidden;text-overflow:clip}
+.timeline-head-inner{position:relative!important;display:block!important;min-height:100%}
+@media(max-width:900px){
+ .data-row,.bar-row{height:34px!important;min-height:34px}
+ .stage-row,.stage-bar-row{height:34px!important;min-height:34px}
+ .bar{height:18px!important;top:8px!important}
+ .stage-bar-row .bar{height:18px!important;top:8px!important}
+}
+@media(prefers-reduced-motion:no-preference){.timeline-body{scroll-behavior:smooth}}
