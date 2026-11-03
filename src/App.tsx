@@ -87,7 +87,13 @@ export default function App(){
   };
   wheelFrameRef.current=requestAnimationFrame(animate);
  };
- useEffect(()=>{\n  const node=timelineRef.current;\n  if(!node)return;\n  node.addEventListener('wheel',handleTimelineWheel,{passive:false});\n  return()=>node.removeEventListener('wheel',handleTimelineWheel);\n },[]);\n const openNewTask=(stageId:string)=>{const d=iso(new Date());setNewTaskStage(stageId);setNewTaskDraft({id:`${stageId}.${Date.now().toString().slice(-4)}`,name:'',start:d,end:iso(new Date(Date.now()+14*DAY)),progress:0,budget:0,paid:0,contractor:'Не назначен',people:0,comment:''});};
+ useEffect(()=>{
+  const node=timelineRef.current;
+  if(!node)return;
+  node.addEventListener('wheel',handleTimelineWheel,{passive:false});
+  return()=>node.removeEventListener('wheel',handleTimelineWheel);
+ },[]);
+ const openNewTask=(stageId:string)=>{const d=iso(new Date());setNewTaskStage(stageId);setNewTaskDraft({id:`${stageId}.${Date.now().toString().slice(-4)}`,name:'',start:d,end:iso(new Date(Date.now()+14*DAY)),progress:0,budget:0,paid:0,contractor:'Не назначен',people:0,comment:''});};
  const saveNewTask=()=>{if(!newTaskStage||!newTaskDraft)return;if(!newTaskDraft.name.trim()){alert('Укажите название работы');return;}if(date(newTaskDraft.end)<date(newTaskDraft.start)){alert('Дата окончания не может быть раньше даты начала');return;}setStages(old=>old.map(st=>st.id===newTaskStage?{...st,tasks:[...st.tasks,newTaskDraft]}:st));setNewTaskStage(null);setNewTaskDraft(null);};
  useEffect(()=>{if(!expanded)return;const orientation=screen.orientation as ScreenOrientation & {lock?:(value:'landscape')=>Promise<void>;unlock?:()=>void};if(window.matchMedia('(max-width: 900px)').matches){orientation.lock?.('landscape').catch(()=>{});}return()=>{orientation.unlock?.();};},[expanded]);
  return <div className="app-shell">
