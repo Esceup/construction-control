@@ -5,5 +5,5 @@ const fmt=(s:string)=>date(s).toLocaleDateString('ru-RU');
 const status=(t:RowTask)=>t.progress===100?'done':t.progress>0?'doing':date(t.end)<new Date(new Date().toDateString())?'late':'todo';
 export function GanttBarRow({kind,task,left,width,onSelect}:Props){
  const state=status(task);
- return <div className={`bar-row ${kind==='stage'?'stage-bar-row':''}`}><div className={`bar ${state}`} title={`${task.name}: ${fmt(task.start)} — ${fmt(task.end)}`} style={{left,width}} onClick={onSelect}><div className={`bar-fill ${state}`} style={{width:`${task.progress}%`}}/></div></div>;
+ return <div className={`bar-row ${kind==='stage'?'stage-bar-row':''}`}><div className={`bar ${state}`} title={`${task.name}: ${fmt(task.start)} — ${fmt(task.end)}`} style={{left,width}} onClick={onSelect}><div className={`bar-fill ${state}`} style={{width:`${task.progress}%`}}/></div><span className="bar-percent" style={{left:left+width+7}}>{task.progress}%</span></div>;
 }
