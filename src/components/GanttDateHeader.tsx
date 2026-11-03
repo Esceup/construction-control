@@ -1,10 +1,23 @@
 import type { ReactNode } from 'react';
-type Scale = 'days' | 'weeks' | 'months';
+type Scale = 'days' | 'weeks' | 'months' | 'quarters';
 type Props = { scale: Scale; start: Date; maxEnd: Date; days: number; px: number };
 const DAY = 86400000;
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 export function GanttDateHeader({ scale, start, maxEnd, days, px }: Props) {
  const cells: ReactNode[] = [];
+ if (scale === 'quarters') {
+  let cursor = new Date(start.getFullYear(),Math.floor(start.getMonth()/3)*3,1);
+  while(cursor<=maxEnd){
+   const quarterStart=new Date(cursor),quarterEnd=new Date(cursor.getFullYear(),cursor.getMonth()+3,0);
+   const visibleStart=cursor<start?start:cursor,visibleEnd=quarterEnd>maxEnd?maxEnd:quarterEnd;
+   const left=Math.max(0,Math.round((visibleStart.getTime()-start.getTime())/DAY*px));
+   const span=Math.round((visibleEnd.getTime()-visibleStart.getTime())/DAY)+1;
+   const quarter=Math.floor(cursor.getMonth()/3)+1;
+   cells.push(<div className="quarter-cell" key={iso(cursor)} style={{position:'absolute',left,width:span*px}}> {quarter} кв. {String(cursor.getFullYear()).slice(-2)}</div>);
+   cursor=new Date(cursor.getFullYear(),cursor.getMonth()+3,1);
+  }
+  return <>{cells}</>;
+ }
  if (scale === 'months') {
   let cursor = new Date(start);
   while (cursor <= maxEnd) {

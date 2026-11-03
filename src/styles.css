@@ -292,3 +292,23 @@
  .bar{height:18px!important;top:8px!important}
  .stage-bar-row .bar{height:18px!important;top:8px!important}
 }
+
+/* Compact Gantt presentation: thin progress tracks and dense rows */
+@media(min-width:901px){
+ .data-row,.bar-row{height:27px!important;min-height:27px!important}
+ .stage-row,.stage-bar-row{height:29px!important;min-height:29px!important}
+ .bar{height:13px!important;top:7px!important;padding:0 5px!important;border-radius:4px!important;background:#f0f3f7!important;border:1px solid #e3e8ef;box-sizing:border-box}
+ .stage-bar-row .bar{height:14px!important;top:7px!important}
+ .bar-fill{top:50%!important;bottom:auto!important;height:4px!important;transform:translateY(-50%);border-radius:4px;opacity:1!important}
+ .bar-label,.bar-progress{font-size:8px!important}
+}
+@media(max-width:900px){
+ .data-row,.bar-row{height:30px!important;min-height:30px!important}
+ .stage-row,.stage-bar-row{height:31px!important;min-height:31px!important}
+ .bar{height:13px!important;top:8px!important;background:#f0f3f7!important;border:1px solid #e3e8ef;box-sizing:border-box}
+ .stage-bar-row .bar{height:13px!important;top:9px!important}
+ .bar-fill{top:50%!important;bottom:auto!important;height:4px!important;transform:translateY(-50%);border-radius:4px;opacity:1!important}
+ .bar-label,.bar-progress{font-size:7px!important}
+}
+.bar.done,.bar.doing,.bar.todo,.bar.late{background:#f0f3f7!important}
+.quarter-cell{box-sizing:border-box;height:100%;display:flex;align-items:center;justify-content:center;border-left:1px solid #d5dce6;border-right:1px solid #e6ebf1;color:#52647b;font-size:9px;font-weight:700;white-space:nowrap;overflow:hidden;background:rgba(238,242,247,.55)}
