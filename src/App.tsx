@@ -47,7 +47,7 @@ export default function App(){
  const tasks=stages.flatMap(s=>s.tasks);
  const columnTrack=(visible:boolean,width:number)=>visible?`${width}px`:'0px';
  const ganttColumns=['25px',columnTrack(columns.number,GANTT_COLUMN_WIDTHS.number),columns.name?'minmax(0, 1fr)':'0px',columnTrack(columns.workforce,GANTT_COLUMN_WIDTHS.workforce),columnTrack(columns.progress,GANTT_COLUMN_WIDTHS.progress),columnTrack(columns.money,GANTT_COLUMN_WIDTHS.money)].join(' ');
- const ganttMobileColumns=['18px',columnTrack(columns.number,26),columns.name?'minmax(0, 1fr)':'0px','0px','0px','0px'].join(' ');
+ const ganttMobileColumns=['18px','0px',columns.name?'minmax(0, 1fr)':'0px','0px','0px','0px'].join(' ');
  const ganttLeftWidth=26+(columns.number?GANTT_COLUMN_WIDTHS.number:0)+(columns.name?GANTT_COLUMN_WIDTHS.name:0)+(columns.workforce?GANTT_COLUMN_WIDTHS.workforce:0)+(columns.progress?GANTT_COLUMN_WIDTHS.progress:0)+(columns.money?GANTT_COLUMN_WIDTHS.money:0);
  const totalBudget=tasks.reduce((a,t)=>a+t.budget,0),totalPaid=tasks.reduce((a,t)=>a+t.paid,0),avg=Math.round(tasks.reduce((a,t)=>a+t.progress,0)/Math.max(1,tasks.length));
  const today=new Date();today.setHours(0,0,0,0);const start=projectStart;const maxEnd=new Date(Math.max(projectEnd.getTime(),today.getTime(),...tasks.map(t=>date(t.end).getTime())));const days=Math.ceil((maxEnd.getTime()-start.getTime())/DAY)+1;
