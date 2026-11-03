@@ -364,7 +364,7 @@
 .gantt-layout{overflow:hidden}.timeline-body{overflow-x:auto!important;overflow-y:hidden!important;flex:1!important;min-height:0!important}
 .gantt-layout{grid-template-columns:minmax(390px,48%) minmax(0,1fr)!important}
 @media(max-width:900px){.left-head,.data-row{grid-template-columns:20px 24px minmax(95px,1.5fr) 34px minmax(68px,1fr) 58px!important}.col-people,.col-contractor,.col-budget{font-size:8px;padding:0 2px}.bar-percent{font-size:8px}}
-@media(max-width:640px){.gantt-layout{grid-template-columns:minmax(0,1fr) minmax(125px,1fr)!important}.left-head,.data-row{grid-template-columns:18px 20px minmax(75px,1.5fr) 27px minmax(54px,1fr) 50px!important}.col-people,.col-contractor,.col-budget{font-size:7px}.bar-percent{font-size:7px}.timeline-slider{height:30px;padding:0 8px;gap:6px}.timeline-slider span{font-size:8px}}
+@media(max-width:640px){.gantt-layout{grid-template-columns:minmax(0,1fr) minmax(125px,1fr)!important}.left-head,.data-row{grid-template-columns:18px 20px minmax(75px,1.5fr) 27px minmax(54px,1fr) 50px!important}.col-people,.col-contractor,.col-budget{font-size:7px}.bar-percent{font-size:7px}}
 
 /* Column header toggles, contractor/person combined cell, chart-side budget */
 .column-head{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;padding:0 16px 0 4px}
@@ -388,3 +388,6 @@
 .bar-budget{display:none!important}
 @media(max-width:900px){.col-contractor{max-width:120px}.col-budget{padding-left:3px;padding-right:3px}}
 @media(max-width:640px){.left-head,.data-row{grid-template-columns:18px 20px minmax(0,1fr) max-content max-content!important}.col-contractor{max-width:78px}}
+
+/* Fix: left table must occupy exactly its own 390px grid track; remove unused parent gap. */
+@media(min-width:901px){.gantt-layout{grid-template-columns:390px minmax(0,1fr)!important}.left-pane{width:390px!important;min-width:0!important}}
