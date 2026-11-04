@@ -108,7 +108,7 @@
 .left-head,.timeline-head{position:sticky; top:0; z-index:8}
 .left-rows{overflow:visible; flex:none; height:max-content}
 .timeline-body{overflow-x:auto; overflow-y:hidden; flex:none; height:max-content; min-height:0;
-  -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; touch-action:pan-x pan-y; cursor:ew-resize}
+  -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; touch-action:pan-x pan-y}
 .timeline-inner{height:max-content; min-height:0}
 .bar-row,.stage-bar-row{flex:none}
 @media(max-width:640px){
@@ -141,7 +141,7 @@
 .right-pane{display:block!important;min-width:0}
 .timeline-head{overflow:hidden!important;flex:none}
 .timeline-head-inner{height:100%;position:relative;display:block;white-space:nowrap}
-.timeline-body{display:block!important;height:max-content!important;max-height:none!important;overflow-x:auto!important;overflow-y:hidden!important;flex:none!important;min-height:0;touch-action:pan-x pan-y!important;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;cursor:ew-resize}
+.timeline-body{display:block!important;height:max-content!important;max-height:none!important;overflow-x:auto!important;overflow-y:hidden!important;flex:none!important;min-height:0;touch-action:pan-x pan-y!important;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 .timeline-inner{position:relative;height:max-content!important;min-height:0!important}
 .bar-row{height:38px!important;min-height:38px}
 .stage-bar-row{height:36px!important;min-height:36px}
@@ -191,7 +191,7 @@
 .left-rows{height:auto!important;overflow:visible!important;flex:none!important}
 .left-head,.timeline-head{position:sticky;top:0;z-index:8}
 .timeline-head{overflow:hidden!important;flex-shrink:0}
-.timeline-body{height:auto!important;max-height:none!important;min-height:0!important;overflow-x:auto!important;overflow-y:hidden!important;flex:none!important;overscroll-behavior-x:contain;overscroll-behavior-y:auto;touch-action:pan-x pan-y!important;-webkit-overflow-scrolling:touch;cursor:ew-resize}
+.timeline-body{height:auto!important;max-height:none!important;min-height:0!important;overflow-x:auto!important;overflow-y:hidden!important;flex:none!important;overscroll-behavior-x:contain;overscroll-behavior-y:auto;touch-action:pan-x pan-y!important;-webkit-overflow-scrolling:touch}
 .timeline-inner{height:auto!important;min-height:0!important}
 .right-pane{display:flex!important;flex-direction:column}
 .bar-row{flex-shrink:0}
@@ -312,12 +312,7 @@
  .col-name>span,.stage-row .col-name>span{font-size:9px!important}
  .mobile-sub{font-size:7px!important}
 }
-.gantt-layout{cursor:grab!important;user-select:none}
-.gantt-layout:active{cursor:grabbing!important}
-.timeline-body{cursor:grab!important;user-select:none}
-.timeline-body:active{cursor:grabbing!important}
 .timeline-body .bar{cursor:pointer}
-@media(pointer:coarse){.gantt-layout,.timeline-body{cursor:auto!important;user-select:auto}}
 .column-head{position:relative;box-sizing:border-box;min-width:0;height:100%;display:flex;align-items:center;overflow:visible}
 .stage-bar-row .bar{background:#edf1f6!important;border:1px solid #cbd5e1!important;box-sizing:border-box}
 
@@ -409,4 +404,63 @@
   padding: 0 4px;
   text-align: center;
   line-height: 1.15;
+}
+
+
+/* Stable native Gantt scrolling: one vertical owner and one horizontal timeline scroller. */
+.gantt-layout{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:contain;
+  touch-action:auto!important;
+  cursor:auto!important;
+  user-select:auto!important;
+  scrollbar-width:thin!important;
+  scrollbar-color:#aebac9 #eef2f7!important;
+}
+.gantt-layout::-webkit-scrollbar{
+  display:block!important;
+  width:10px;
+  height:10px;
+}
+.gantt-layout::-webkit-scrollbar-track,
+.timeline-body::-webkit-scrollbar-track{
+  background:#eef2f7;
+  border-radius:8px;
+}
+.gantt-layout::-webkit-scrollbar-thumb,
+.timeline-body::-webkit-scrollbar-thumb{
+  background:#aebac9;
+  border:2px solid #eef2f7;
+  border-radius:8px;
+}
+.timeline-body{
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  overscroll-behavior-x:contain;
+  overscroll-behavior-y:auto;
+  touch-action:auto!important;
+  cursor:auto!important;
+  user-select:auto!important;
+  scrollbar-width:thin!important;
+  scrollbar-color:#aebac9 #eef2f7!important;
+  scroll-behavior:auto!important;
+}
+.timeline-body::-webkit-scrollbar{
+  display:block!important;
+  width:10px;
+  height:10px;
+}
+@media(pointer:coarse){
+  .gantt-layout{
+    touch-action:auto!important;
+    scrollbar-width:none!important;
+  }
+  .gantt-layout::-webkit-scrollbar{display:none!important;width:0;height:0}
+  .timeline-body{
+    touch-action:pan-x pan-y!important;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none!important;
+  }
+  .timeline-body::-webkit-scrollbar{display:none!important;width:0;height:0}
 }
