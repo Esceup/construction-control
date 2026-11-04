@@ -508,3 +508,68 @@ body {
 .gantt-bottom-scrollbar.is-expanded {
   z-index: 1001;
 }
+
+
+/* Show completion percentage directly on each Gantt bar. */
+.gantt-card .bar .bar-progress-value {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 3 !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 15px;
+  padding: 0 4px;
+  border: 1px solid #dce4ee;
+  border-radius: 5px;
+  background: rgba(255,255,255,.96);
+  color: #26364b;
+  font-size: 9px !important;
+  font-weight: 750;
+  line-height: 1 !important;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 1px 2px #17283c18;
+}
+.gantt-card.is-right-only .bar-task-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  max-width: min(520px,calc(100% - 8px));
+}
+.gantt-card.is-right-only .bar-task-name {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gantt-card.is-right-only .bar-task-progress {
+  flex: 0 0 auto;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: #edf3fb;
+  color: #285f9f;
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .gantt-card .bar .bar-progress-value {
+    min-width: 21px;
+    height: 13px;
+    padding: 0 3px;
+    font-size: 8px !important;
+  }
+  .gantt-card.is-right-only .bar-task-label {
+    gap: 4px;
+  }
+  .gantt-card.is-right-only .bar-task-progress {
+    font-size: 8px;
+  }
+}
