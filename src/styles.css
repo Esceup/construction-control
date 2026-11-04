@@ -499,7 +499,7 @@
  .gantt-card.is-left-only .data-row{grid-template-columns:var(--gantt-mobile-cols)!important;width:100%!important}
  .gantt-card.is-left-only .left-rows{width:100%!important}
  .gantt-card.is-left-only .gantt-layout{overflow-x:hidden!important}
- .gantt-card.is-right-only .bar-row-with-name{height:inherit!important;min-height:inherit!important}
+ 
  .gantt-card.is-right-only .bar-task-label{font-size:9px;top:1px}
 }
 
@@ -540,10 +540,7 @@
   border-radius:inherit!important;
   opacity:1!important;
 }
-.gantt-card.is-right-only .bar-row-with-name{
-  height:inherit!important;
-  min-height:inherit!important;
-}
+
 .gantt-card.is-right-only .bar-task-label{
   position:absolute;
   top:1px;
