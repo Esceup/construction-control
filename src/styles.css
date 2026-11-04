@@ -64,8 +64,8 @@
 .status-pill.doing{background:#fff4cf;color:#9a6b00}
 .legend-dot.doing{background:#e8b52e}
 .bar-fill.doing{background:#e8b52e}
-.timeline-body{cursor:grab;touch-action:pan-x pan-y;overscroll-behavior:contain;user-select:none}
-.timeline-body:active{cursor:grabbing}
+.timeline-body{touch-action:pan-x pan-y;overscroll-behavior:contain}
+
 .timeline-inner{min-height:100%;width:max-content}
 .add-work{border:0;background:transparent;color:#4776b8;font-size:9px;padding:1px 0;cursor:pointer;display:block}
 .data-row.stage-row .col-name{position:relative}
@@ -225,7 +225,7 @@
 .timeline-head{overflow:hidden!important;scrollbar-width:none}
 .timeline-head::-webkit-scrollbar{display:none}
 .timeline-body{scroll-behavior:auto;scrollbar-gutter:stable}
-@media(min-width:901px){.gantt-layout{scroll-behavior:auto}.timeline-body{cursor:ew-resize}}
+@media(min-width:901px){.gantt-layout{scroll-behavior:auto}}
 
 /* v0.1.7 — stage actions, responsive task form and month header flow */
 .timeline-head-inner{display:flex!important;align-items:stretch;white-space:nowrap}
