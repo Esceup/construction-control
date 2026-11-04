@@ -572,17 +572,27 @@
 }
 
 
-/* Table-only mode: keep every work attribute on one compact row. */
+/* Table-only mode: one shared grid keeps every header aligned to the widest cell. */
 .gantt-card.is-left-only .left-pane{
+  display:grid!important;
+  grid-template-columns:var(--gantt-left-only-cols)!important;
+  grid-auto-rows:max-content;
+  align-content:start;
   width:max-content!important;
   max-width:none!important;
   justify-self:start!important;
-  margin-inline:auto!important;
+  margin:0!important;
+}
+.gantt-card.is-left-only .left-rows{
+  display:contents!important;
+  width:auto!important;
 }
 .gantt-card.is-left-only .left-head,
 .gantt-card.is-left-only .data-row{
-  grid-template-columns:var(--gantt-left-only-cols)!important;
-  width:max-content!important;
+  display:grid!important;
+  grid-column:1 / -1;
+  grid-template-columns:subgrid!important;
+  width:auto!important;
 }
 .gantt-card.is-left-only .left-head{
   height:42px!important;
@@ -590,7 +600,6 @@
 }
 .gantt-card.is-left-only .data-row,
 .gantt-card.is-left-only .data-row.stage-row{
-  display:grid!important;
   height:40px!important;
   min-height:40px!important;
   align-items:center!important;
@@ -600,7 +609,6 @@
 .gantt-card.is-left-only .data-row>div{
   display:flex;
   align-items:center;
-  justify-content:flex-start;
   gap:7px;
   box-sizing:border-box;
   height:100%;
@@ -615,11 +623,15 @@
   text-align:center;
   font-size:9px;
 }
+.gantt-card.is-left-only .data-row>div{
+  justify-content:flex-start;
+  text-align:left;
+}
 .gantt-card.is-left-only .col-name>span,
 .gantt-card.is-left-only .stage-row .col-name>span{
   display:block!important;
   width:max-content;
-  max-width:390px;
+  max-width:none!important;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap!important;
@@ -673,14 +685,14 @@
   .gantt-card.is-left-only .left-pane{
     width:max-content!important;
     justify-self:start!important;
-    margin-inline:auto!important;
+    margin:0!important;
   }
+  .gantt-card.is-left-only .left-rows{display:contents!important}
   .gantt-card.is-left-only .left-head,
   .gantt-card.is-left-only .data-row{
-    grid-template-columns:var(--gantt-left-only-cols)!important;
-    width:max-content!important;
+    grid-template-columns:subgrid!important;
+    width:auto!important;
   }
-  .gantt-card.is-left-only .left-rows{width:max-content!important}
   .gantt-card.is-left-only .gantt-column-mobile-hidden{
     visibility:visible!important;
     overflow:visible!important;
