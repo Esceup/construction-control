@@ -249,7 +249,7 @@
 .stage-action-btn:hover,.add-stage-task:hover{background:#edf4ff;border-color:#aac5eb}
 .data-row.stage-row .col-name{padding-right:58px!important}
 .task-modal{box-sizing:border-box;width:min(560px,calc(100vw - 28px));max-width:calc(100vw - 28px);max-height:min(90dvh,820px);overflow-y:auto}
-.task-modal input:not([type=range]),.task-modal textarea{box-sizing:border-box;width:100%;min-width:0;max-width:100%}
+.task-modal input:not([type=range]):not([type=checkbox]):not([type=radio]),.task-modal textarea{box-sizing:border-box;width:100%;min-width:0;max-width:100%}
 .task-modal .field-label{display:block;min-width:0}
 .edit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(max-width:520px){.edit-grid{grid-template-columns:minmax(0,1fr)}.stage-actions{gap:2px}.stage-action-btn,.add-stage-task{width:21px;height:21px;flex-basis:21px}.data-row.stage-row .col-name{padding-right:48px!important}}
