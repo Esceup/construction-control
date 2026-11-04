@@ -467,3 +467,44 @@ body {
     top: 56px !important;
   }
 }
+
+
+/* Fixed horizontal timeline scrollbar, aligned with the visible Gantt plot. */
+.gantt-bottom-scrollbar {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom, 0px);
+  height: 20px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  z-index: 30;
+  box-sizing: border-box;
+  background: #f7f9fc;
+  border: 1px solid #d9e1eb;
+  border-bottom: 0;
+  border-radius: 7px 7px 0 0;
+  box-shadow: 0 -2px 8px #182b4512;
+  scrollbar-width: auto;
+  scrollbar-color: #91a2b7 #e9eef4;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+.gantt-bottom-scrollbar-content {
+  height: 1px;
+  min-width: 100%;
+}
+.gantt-bottom-scrollbar::-webkit-scrollbar {
+  height: 16px;
+}
+.gantt-bottom-scrollbar::-webkit-scrollbar-track {
+  background: #e9eef4;
+  border-radius: 999px;
+}
+.gantt-bottom-scrollbar::-webkit-scrollbar-thumb {
+  background: #91a2b7;
+  border: 3px solid #e9eef4;
+  border-radius: 999px;
+}
+.gantt-bottom-scrollbar.is-expanded {
+  z-index: 1001;
+}

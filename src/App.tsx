@@ -44,7 +44,8 @@ const GANTT_COLUMN_WIDTHS = { number: 32, name: 109, workforce: 120, progress: 6
 
 export default function App(){
  const [stages,setStages]=useState<Stage[]>(loadStages),[collapsed,setCollapsed]=useState<string[]>([]),[columns,setColumns]=useState({number:true,name:true,planned:true,actual:true,workforce:true,progress:true,money:true}),[columnMenuOpen,setColumnMenuOpen]=useState(false),[scale,setScale]=useState<'days'|'weeks'|'months'|'quarters'>('months'),[zoomLevel,setZoomLevel]=useState(1),[selected,setSelected]=useState<Task|null>(null),[draft,setDraft]=useState<Task|null>(null),[search,setSearch]=useState(''),[mobileMenu,setMobileMenu]=useState(false),[newTaskStage,setNewTaskStage]=useState<string|null>(null),[newTaskDraft,setNewTaskDraft]=useState<Task|null>(null),[expanded,setExpanded]=useState(false),[viewMode,setViewMode]=useState<'both'|'left'|'right'>('both'),[stageNameDraft,setStageNameDraft]=useState(''),[editingStageId,setEditingStageId]=useState<string|null>(null),[stageModalOpen,setStageModalOpen]=useState(false);
- const layoutRef=useRef<HTMLDivElement>(null),timelineRef=useRef<HTMLDivElement>(null),headerRef=useRef<HTMLDivElement>(null);
+ const [horizontalDock,setHorizontalDock]=useState({left:0,width:0,contentWidth:0,visible:false});
+ const layoutRef=useRef<HTMLDivElement>(null),timelineRef=useRef<HTMLDivElement>(null),headerRef=useRef<HTMLDivElement>(null),bottomScrollbarRef=useRef<HTMLDivElement>(null);
  useEffect(()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(stages));}catch(error){console.warn('Не удалось сохранить данные проекта в этом браузере',error);}},[stages]);
  const tasks=stages.flatMap(s=>s.tasks);
  const columnTrack=(visible:boolean,width:number)=>visible?`${width}px`:'0px';
@@ -64,8 +65,54 @@ export default function App(){
  }
  const scrollToday=()=>{if(timelineRef.current)timelineRef.current.scrollTo({left:Math.max(0,x(iso(today))-timelineRef.current.clientWidth/2),behavior:'smooth'});};
  const fit=()=>{setScale('months');setZoomLevel(.25);timelineRef.current?.scrollTo({left:0,behavior:'smooth'});layoutRef.current?.scrollTo({top:0,behavior:'smooth'});};
- const syncHeader=()=>{if(timelineRef.current&&headerRef.current)headerRef.current.scrollLeft=timelineRef.current.scrollLeft;};
- useEffect(()=>{syncHeader();},[scale,zoomLevel]);
+ const syncHeader=()=>{
+  const timeline=timelineRef.current;
+  if(!timeline)return;
+  if(headerRef.current&&headerRef.current.scrollLeft!==timeline.scrollLeft)headerRef.current.scrollLeft=timeline.scrollLeft;
+  if(bottomScrollbarRef.current&&Math.abs(bottomScrollbarRef.current.scrollLeft-timeline.scrollLeft)>1)bottomScrollbarRef.current.scrollLeft=timeline.scrollLeft;
+ };
+ const syncTimelineFromBottom=()=>{
+  const timeline=timelineRef.current,bar=bottomScrollbarRef.current;
+  if(timeline&&bar&&Math.abs(timeline.scrollLeft-bar.scrollLeft)>1)timeline.scrollLeft=bar.scrollLeft;
+ };
+ useEffect(()=>{
+  syncHeader();
+  const updateDock=()=>{
+   const timeline=timelineRef.current;
+   const card=layoutRef.current?.closest('.gantt-card') as HTMLElement|null;
+   if(!timeline||!card||viewMode==='left'){
+    setHorizontalDock(current=>current.visible?{...current,visible:false}:current);
+    return;
+   }
+   const rect=timeline.getBoundingClientRect();
+   const cardRect=card.getBoundingClientRect();
+   const left=Math.max(0,rect.left);
+   const right=Math.min(window.innerWidth,rect.right);
+   const width=Math.max(0,right-left);
+   const contentWidth=Math.max(timeline.scrollWidth,timeline.clientWidth);
+   const visible=timeline.scrollWidth>timeline.clientWidth+1&&width>0&&cardRect.bottom>0&&cardRect.top<window.innerHeight;
+   setHorizontalDock(current=>{
+    if(Math.abs(current.left-left)<0.5&&Math.abs(current.width-width)<0.5&&Math.abs(current.contentWidth-contentWidth)<0.5&&current.visible===visible)return current;
+    return {left,width,contentWidth,visible};
+   });
+  };
+  updateDock();
+  window.addEventListener('scroll',updateDock,true);
+  window.addEventListener('resize',updateDock);
+  const observer=typeof ResizeObserver!=='undefined'?new ResizeObserver(updateDock):null;
+  if(timelineRef.current)observer?.observe(timelineRef.current);
+  if(timelineRef.current?.firstElementChild instanceof HTMLElement)observer?.observe(timelineRef.current.firstElementChild);
+  return ()=>{
+   window.removeEventListener('scroll',updateDock,true);
+   window.removeEventListener('resize',updateDock);
+   observer?.disconnect();
+  };
+ },[expanded,viewMode,scale,zoomLevel,visible.length]);
+ useEffect(()=>{
+  if(horizontalDock.visible&&timelineRef.current&&bottomScrollbarRef.current){
+   bottomScrollbarRef.current.scrollLeft=timelineRef.current.scrollLeft;
+  }
+ },[horizontalDock.visible,horizontalDock.contentWidth,scale,zoomLevel,viewMode]);
  const toggle=(id:string)=>setCollapsed(v=>v.includes(id)?v.filter(x=>x!==id):[...v,id]);
  const update=(id:string,patch:Partial<Task>)=>setStages(old=>old.map(s=>({...s,tasks:s.tasks.map(t=>t.id===id?{...t,...patch}:t)})));
  const saveDraft=()=>{if(!draft)return;if(date(draft.end)<date(draft.start)){alert('Плановая дата окончания не может быть раньше даты начала');return;}if(draft.actualStart&&draft.actualEnd&&date(draft.actualEnd)<date(draft.actualStart)){alert('Фактическая дата окончания не может быть раньше даты начала');return;}update(draft.id,draft);setSelected(draft);setDraft(null);};
@@ -93,6 +140,7 @@ export default function App(){
   <div className="right-pane"><div className="timeline-head" ref={headerRef} onScroll={syncHeader}><div className="timeline-head-inner" style={{width}}><GanttDateHeader scale={scale} start={start} maxEnd={maxEnd} days={days} px={px}/></div></div><div className="timeline-body" ref={timelineRef} onScroll={syncHeader}><div className="timeline-inner" style={{width}}>{scale==='quarters'?quarterMonthLines.map((line,i)=><div className={`grid-line month-grid-line ${line.quarter?'quarter-grid-line':''}`} key={`quarter-month-${i}`} style={{left:line.left}}/>):Array.from({length:Math.ceil(days/(scale==='months'?30:scale==='weeks'?7:Math.max(1,Math.ceil(54/px))))},(_,i)=><div className="grid-line" key={i} style={{left:i*(scale==='months'?30:scale==='weeks'?7:Math.max(1,Math.ceil(54/px)))*px}}/>)}<div className="today-line" style={{left:x(iso(today))}}><span>Сегодня</span></div>{visible.map(({kind,task})=><GanttBarRow key={task.id} kind={kind} task={task} left={x(task.start)} width={w(task.start,task.end)} showName={viewMode==='right'} onSelect={()=>setSelected(task)}/>) }</div></div></div></div>
   <div className="gantt-footer"><div className="footer-left"><button className="text-btn" onClick={()=>setCollapsed(collapsed.length===stages.length?[]:stages.map(s=>s.id))}>{collapsed.length===stages.length?<ChevronsUpDown size={15}/>:<ChevronsDownUp size={15}/>} {collapsed.length===stages.length?'Развернуть этапы':'Свернуть все этапы'}</button><span className="footer-divider"/><span>Показано {visible.length} строк</span></div><div className="footer-right"><button className="text-btn" onClick={fit}><Maximize2 size={15}/> Весь график</button><span className="date-range">01.11.2025 — {fmt(iso(maxEnd))}</span></div></div>
   </div><div className="bottom-hint"><AlertTriangle size={15}/> Демонстрационные данные. Изменения сохраняются в этом браузере.</div></section></main>
+  {horizontalDock.visible&&<div className={`gantt-bottom-scrollbar ${expanded?'is-expanded':''}`} ref={bottomScrollbarRef} style={{left:horizontalDock.left,width:horizontalDock.width}} onScroll={syncTimelineFromBottom} role="region" aria-label="Горизонтальная прокрутка графика" tabIndex={0}><div className="gantt-bottom-scrollbar-content" style={{width:horizontalDock.contentWidth}}/></div>}
   {selected&&<div className="modal-backdrop" onClick={()=>setSelected(null)}><div className="task-modal" onClick={e=>e.stopPropagation()}><div className="modal-head"><div><div className="eyebrow">КАРТОЧКА РАБОТЫ · {selected.id}</div><h2>{selected.name}</h2></div><button className="icon-btn" onClick={()=>setSelected(null)}><X/></button></div><div className="modal-grid"><div className="detail"><small>Плановые даты</small><b>{fmtRange(selected.start,selected.end)}</b></div><div className="detail"><small>Фактические даты</small><b>{fmtOptionalRange(selected.actualStart,selected.actualEnd)}</b></div><div className="detail"><small>Готовность</small><b>{selected.progress}%</b></div><div className="detail"><small>Статус</small><b>{statusName(selected)}</b></div><div className="detail"><small>Бригада / организация</small><b>{selected.contractor}</b></div><div className="detail"><small>Человек в бригаде</small><b>{selected.people} чел.</b></div><div className="detail"><small>Продолжительность</small><b>{Math.round((date(selected.end).getTime()-date(selected.start).getTime())/DAY)+1} дней</b></div><div className="detail"><small>Бюджет</small><b>{money(selected.budget)}</b></div><div className="detail"><small>Оплачено</small><b>{money(selected.paid)}</b></div><div className="detail"><small>Остаток</small><b>{money(selected.budget-selected.paid)}</b></div></div><div className="modal-actions"><button className="delete-btn" onClick={()=>deleteTask(selected.id)}><Trash2 size={14}/> Удалить работу</button><button className="secondary" onClick={()=>setSelected(null)}>Закрыть</button><button className="primary" onClick={()=>{setDraft({...selected});setSelected(null)}}>Редактировать</button></div></div></div>}
   {draft&&<div className="modal-backdrop" onClick={()=>setDraft(null)}><div className="task-modal edit-modal" onClick={e=>e.stopPropagation()}><div className="modal-head"><div><div className="eyebrow">РЕДАКТИРОВАНИЕ РАБОТЫ · {draft.id}</div><h2>{draft.name}</h2></div><button className="icon-btn" onClick={()=>setDraft(null)}><X/></button></div><label className="field-label">Наименование работы<input value={draft.name} onChange={e=>setDraft({...draft,name:e.target.value})}/></label><div className="edit-grid"><label className="field-label">Плановое начало<input type="date" value={draft.start} onChange={e=>setDraft({...draft,start:e.target.value})}/></label><label className="field-label">Плановое окончание<input type="date" value={draft.end} min={draft.start} onChange={e=>setDraft({...draft,end:e.target.value})}/></label><label className="field-label">Фактическое начало<input type="date" value={draft.actualStart||''} onChange={e=>setDraft({...draft,actualStart:e.target.value||undefined})}/></label><label className="field-label">Фактическое окончание<input type="date" value={draft.actualEnd||''} min={draft.actualStart||undefined} onChange={e=>setDraft({...draft,actualEnd:e.target.value||undefined})}/></label><label className="field-label">Бюджет, ₽<input type="number" min="0" value={draft.budget} onChange={e=>setDraft({...draft,budget:Math.max(0,Number(e.target.value))})}/></label><label className="field-label">Оплачено, ₽<input type="number" min="0" value={draft.paid} onChange={e=>setDraft({...draft,paid:Math.max(0,Number(e.target.value))})}/></label><label className="field-label">Организация / бригада<input value={draft.contractor} onChange={e=>setDraft({...draft,contractor:e.target.value})}/></label><label className="field-label">Количество человек<input type="number" min="0" max="500" value={draft.people} onChange={e=>setDraft({...draft,people:Math.max(0,Number(e.target.value))})}/></label></div><label className="field-label">Выполнено: {draft.progress}%<input type="range" min="0" max="100" step="5" value={draft.progress} onChange={e=>setDraft({...draft,progress:Number(e.target.value)})}/></label><label className="field-label">Комментарий<textarea value={draft.comment||''} onChange={e=>setDraft({...draft,comment:e.target.value})} placeholder="Добавить комментарий"/></label><div className="derived-fields"><span>Статус: <b>{statusName(draft)}</b></span><span>Длительность: <b>{Math.max(1,Math.round((date(draft.end).getTime()-date(draft.start).getTime())/DAY)+1)} дн.</b></span><span>Остаток: <b>{money(draft.budget-draft.paid)}</b></span></div><div className="modal-actions"><button className="secondary" onClick={()=>setDraft(null)}>Отмена</button><button className="primary" onClick={saveDraft}>Сохранить изменения</button></div></div></div>}
   {newTaskDraft&&<div className="modal-backdrop" onClick={()=>{setNewTaskDraft(null);setNewTaskStage(null)}}><div className="task-modal edit-modal" onClick={e=>e.stopPropagation()}><div className="modal-head"><div><div className="eyebrow">НОВАЯ РАБОТА · ЭТАП {newTaskStage}</div><h2>Добавить работу</h2></div><button className="icon-btn" onClick={()=>{setNewTaskDraft(null);setNewTaskStage(null)}}><X/></button></div><label className="field-label">Наименование работы<input autoFocus value={newTaskDraft.name} onChange={e=>setNewTaskDraft({...newTaskDraft,name:e.target.value})} placeholder="Например, монтаж перекрытий"/></label><div className="edit-grid"><label className="field-label">Дата начала<input type="date" value={newTaskDraft.start} onChange={e=>setNewTaskDraft({...newTaskDraft,start:e.target.value,end:newTaskDraft.end<e.target.value?e.target.value:newTaskDraft.end})}/></label><label className="field-label">Дата окончания<input type="date" min={newTaskDraft.start} value={newTaskDraft.end} onChange={e=>setNewTaskDraft({...newTaskDraft,end:e.target.value})}/></label><label className="field-label">Бюджет, ₽<input type="number" min="0" value={newTaskDraft.budget} onChange={e=>setNewTaskDraft({...newTaskDraft,budget:Math.max(0,Number(e.target.value))})}/></label><label className="field-label">Организация / бригада<input value={newTaskDraft.contractor} onChange={e=>setNewTaskDraft({...newTaskDraft,contractor:e.target.value})}/></label><label className="field-label">Количество человек<input type="number" min="0" value={newTaskDraft.people} onChange={e=>setNewTaskDraft({...newTaskDraft,people:Math.max(0,Number(e.target.value))})}/></label></div><div className="modal-actions"><button className="secondary" onClick={()=>{setNewTaskDraft(null);setNewTaskStage(null)}}>Отмена</button><button className="primary" onClick={saveNewTask}>Добавить</button></div></div></div>}
