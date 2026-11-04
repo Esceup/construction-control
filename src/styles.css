@@ -410,5 +410,5 @@
     grid-template-columns: 108px minmax(0, 1fr);
   }
 }
-.stage-modal-actions{justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.stage-modal-actions-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.stage-modal-actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-top:20px}.stage-modal-management{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.stage-modal-actions-right{display:flex;width:100%;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
 @media(max-width:520px){.stage-modal-actions-right{gap:6px}}
