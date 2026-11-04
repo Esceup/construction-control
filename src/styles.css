@@ -476,7 +476,7 @@
 .column-modal-section-title{padding-top:3px;margin-bottom:11px}
 .gantt-card.is-left-only .gantt-layout,
 .gantt-card.is-right-only .gantt-layout{grid-template-columns:minmax(0,1fr)!important}
-.gantt-card.is-left-only .gantt-layout{overflow-x:auto!important}
+.gantt-card.is-left-only .gantt-layout{overflow-x:auto!important;background:#fff!important}
 .gantt-card.is-left-only .left-pane{display:flex!important;flex-direction:column;width:max-content;max-width:none;justify-self:center;border-right:0}
 .gantt-card.is-left-only .left-head,
 .gantt-card.is-left-only .data-row{grid-template-columns:var(--gantt-left-only-cols)!important;width:max-content!important}
