@@ -397,3 +397,16 @@
 }
 .stage-modal-actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-top:20px}.stage-modal-management{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.stage-modal-actions-right{display:flex;width:100%;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
 @media(max-width:520px){.stage-modal-actions-right{gap:6px}}
+
+
+/* Center all Gantt column headings consistently without changing task cell alignment. */
+.left-head > .column-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 0 4px;
+  text-align: center;
+  line-height: 1.15;
+}
