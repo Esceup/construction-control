@@ -8,12 +8,25 @@ export function GanttDateHeader({ scale, start, maxEnd, days, px }: Props) {
  if (scale === 'quarters') {
   let cursor = new Date(start.getFullYear(),Math.floor(start.getMonth()/3)*3,1);
   while(cursor<=maxEnd){
-   const quarterStart=new Date(cursor),quarterEnd=new Date(cursor.getFullYear(),cursor.getMonth()+3,0);
+   const quarterEnd=new Date(cursor.getFullYear(),cursor.getMonth()+3,0);
    const visibleStart=cursor<start?start:cursor,visibleEnd=quarterEnd>maxEnd?maxEnd:quarterEnd;
    const left=Math.max(0,Math.round((visibleStart.getTime()-start.getTime())/DAY*px));
    const span=Math.round((visibleEnd.getTime()-visibleStart.getTime())/DAY)+1;
    const quarter=Math.floor(cursor.getMonth()/3)+1;
-   cells.push(<div className="quarter-cell" key={iso(cursor)} style={{position:'absolute',left,width:span*px}}> {quarter} кв. {String(cursor.getFullYear()).slice(-2)}</div>);
+   cells.push(<div className="quarter-cell" key={iso(cursor)} style={{position:'absolute',left,top:0,width:span*px,height:20}}>{quarter} кв. {String(cursor.getFullYear()).slice(-2)}</div>);
+   let monthCursor=new Date(cursor);
+   while(monthCursor<=visibleEnd){
+    const monthEnd=new Date(monthCursor.getFullYear(),monthCursor.getMonth()+1,0);
+    const monthVisibleStart=monthCursor<start?start:monthCursor;
+    const monthVisibleEnd=monthEnd>visibleEnd?visibleEnd:monthEnd;
+    const monthLeft=Math.max(0,Math.round((monthVisibleStart.getTime()-start.getTime())/DAY*px));
+    const monthSpan=Math.round((monthVisibleEnd.getTime()-monthVisibleStart.getTime())/DAY)+1;
+    const monthLabel=monthCursor.toLocaleDateString('ru-RU',{month:'short'}).replace('.','');
+    if(monthVisibleEnd>=monthVisibleStart){
+     cells.push(<div className="quarter-month-cell" key={iso(monthCursor)} style={{position:'absolute',left:monthLeft,top:20,width:monthSpan*px,height:20}}>{monthLabel}</div>);
+    }
+    monthCursor=new Date(monthCursor.getFullYear(),monthCursor.getMonth()+1,1);
+   }
    cursor=new Date(cursor.getFullYear(),cursor.getMonth()+3,1);
   }
   return <>{cells}</>;
