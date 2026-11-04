@@ -412,6 +412,7 @@
 .gantt-layout::-webkit-scrollbar{
   display:block!important;
   width:10px;
+  height:10px;
 }
 .gantt-layout::-webkit-scrollbar-track,
 .timeline-body::-webkit-scrollbar-track{
@@ -446,7 +447,7 @@
     touch-action:auto!important;
     scrollbar-width:none!important;
   }
-  .gantt-layout::-webkit-scrollbar{display:none!important;width:0;}
+  .gantt-layout::-webkit-scrollbar{display:none!important;width:0;height:0}
   .timeline-body{
     touch-action:pan-x pan-y!important;
     -webkit-overflow-scrolling:touch;
