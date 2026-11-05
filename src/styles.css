@@ -150,11 +150,7 @@
 @media (max-width: 640px) {.left-head,
 .data-row{
     grid-template-columns: var(--gantt-mobile-cols);
-    padding: 0 4px;
-  }.gantt-column-mobile-hidden{
-    padding: 0 !important;
-    overflow: hidden !important;
-    visibility: hidden !important;
+    padding: 0;
   }
 }
 @media (max-width: 380px) {
@@ -422,12 +418,12 @@ body {
 }
 @media (max-width: 640px) {
   .gantt-layout {
-    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-columns: var(--gantt-mobile-left-width) minmax(0, 1fr);
   }
 }
 @media (max-width: 380px) {
   .gantt-layout {
-    grid-template-columns: 108px minmax(0, 1fr);
+    grid-template-columns: var(--gantt-mobile-left-width) minmax(0, 1fr);
   }
 }
 .gantt-card.is-left-only .gantt-layout {
@@ -551,5 +547,115 @@ body {
   .gantt-card.is-right-only .bar-task-label {
     font-size: 8px;
     line-height: 9px;
+  }
+}
+
+
+/* Mobile Gantt viewer: full table, timeline-only zoom, and read-only interaction. */
+@media (max-width: 640px) {
+  .gantt-card:not(.is-left-only):not(.is-right-only) .gantt-column-mobile-hidden {
+    visibility: visible !important;
+    overflow: hidden !important;
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+  }
+  .gantt-layout {
+    grid-template-columns: var(--gantt-mobile-left-width) minmax(0, 1fr) !important;
+  }
+  .left-pane {
+    min-width: var(--gantt-mobile-left-width) !important;
+  }
+  .left-head,
+  .data-row {
+    grid-template-columns: var(--gantt-mobile-cols) !important;
+    padding: 0 !important;
+  }
+  .left-head > div,
+  .data-row > div {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .left-head .col-name {
+    padding-left: 4px !important;
+    font-size: 8px !important;
+  }
+  .col-name > span,
+  .stage-row .col-name > span {
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+  }
+  .col-workforce {
+    padding: 0 3px !important;
+    gap: 1px !important;
+    font-size: 7px !important;
+  }
+  .col-workforce small,
+  .col-progress b,
+  .col-money b,
+  .col-money small {
+    font-size: 7px !important;
+    line-height: 1.05 !important;
+  }
+  .col-progress {
+    gap: 1px !important;
+    padding: 0 2px !important;
+  }
+  .col-progress .status-pill {
+    font-size: 6px !important;
+    padding: 1px 2px !important;
+    line-height: 1 !important;
+  }
+  .col-money {
+    padding: 0 2px !important;
+  }
+  .page-head > .settings,
+  .stage-actions,
+  .add-work {
+    display: none !important;
+  }
+  .read-only-mobile .modal-actions .delete-btn,
+  .read-only-mobile .modal-actions .primary {
+    display: none !important;
+  }
+  .toolbar-right .square {
+    display: grid !important;
+    flex: 0 0 30px !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    padding: 0 !important;
+    place-items: center !important;
+    box-sizing: border-box !important;
+  }
+  .toolbar-right .square svg,
+  .toolbar-right .today-btn svg {
+    display: block;
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+  }
+  .stage-number .collapse {
+    display: grid !important;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 22px;
+    place-items: center;
+    padding: 0 !important;
+  }
+  .gantt-card.is-right-only .bar-row,
+  .gantt-card.is-right-only .stage-bar-row {
+    height: 26px !important;
+    min-height: 26px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .gantt-card.is-right-only .bar-task-label {
+    top: 0 !important;
+    line-height: 9px !important;
+    padding: 0 2px !important;
+  }
+  .gantt-card.is-right-only .bar {
+    height: 7px !important;
+    min-height: 7px !important;
   }
 }
