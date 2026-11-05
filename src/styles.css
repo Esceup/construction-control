@@ -661,7 +661,7 @@ body {
 }
 
 
-/* Mobile Gantt: independent row-height zoom, a safe left inset, and a continuous timeline tail. */
+/* Mobile Gantt: independent row-height controls, balanced insets, and a continuous timeline tail. */
 @media (max-width: 900px) {
   .gantt-layout {
     box-sizing: border-box;
@@ -701,5 +701,45 @@ body {
   .gantt-card.is-right-only .stage-bar-row {
     height: calc(26px * var(--gantt-mobile-row-zoom, 1)) !important;
     min-height: calc(26px * var(--gantt-mobile-row-zoom, 1)) !important;
+  }
+}
+
+/* Mobile Gantt refinement: independent vertical density and breathing room. */
+@media (max-width: 900px) {
+  .mobile-row-zoom {
+    display: grid !important;
+  }
+  .gantt-card .timeline-body,
+  .gantt-card .timeline-head {
+    padding-left: 8px;
+    box-sizing: border-box;
+  }
+  .gantt-card .timeline-inner,
+  .gantt-card .timeline-head-inner {
+    margin-left: 0;
+  }
+  .gantt-card:not(.is-right-only) .data-row,
+  .gantt-card:not(.is-right-only) .bar-row {
+    height: calc(34px * var(--gantt-mobile-row-zoom, 1)) !important;
+    min-height: calc(34px * var(--gantt-mobile-row-zoom, 1)) !important;
+  }
+  .gantt-card:not(.is-right-only) .data-row.stage-row,
+  .gantt-card:not(.is-right-only) .bar-row.stage-bar-row {
+    height: calc(31px * var(--gantt-mobile-row-zoom, 1)) !important;
+    min-height: calc(31px * var(--gantt-mobile-row-zoom, 1)) !important;
+  }
+  .gantt-card.is-right-only .bar-row,
+  .gantt-card.is-right-only .stage-bar-row {
+    height: calc(23px * var(--gantt-mobile-row-zoom, 1)) !important;
+    min-height: calc(23px * var(--gantt-mobile-row-zoom, 1)) !important;
+  }
+  .gantt-card .data-row,
+  .gantt-card .bar-row {
+    border-bottom: 1px solid #f0f2f5;
+  }
+}
+@media (min-width: 901px) {
+  .mobile-row-zoom {
+    display: none !important;
   }
 }
