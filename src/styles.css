@@ -659,3 +659,47 @@ body {
     min-height: 7px !important;
   }
 }
+
+
+/* Mobile Gantt: independent row-height zoom, a safe left inset, and a continuous timeline tail. */
+@media (max-width: 900px) {
+  .gantt-layout {
+    box-sizing: border-box;
+    padding-left: 8px;
+  }
+  .timeline-inner,
+  .timeline-head-inner {
+    min-width: calc(100% + 96px) !important;
+  }
+  .timeline-inner::after,
+  .timeline-head-inner::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 96px;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent 29px,
+      #f0f2f5 30px
+    );
+  }
+  .gantt-card:not(.is-right-only) .data-row,
+  .gantt-card:not(.is-right-only) .bar-row {
+    height: calc(44px * var(--gantt-mobile-row-zoom, 1)) !important;
+    min-height: calc(44px * var(--gantt-mobile-row-zoom, 1)) !important;
+  }
+  .gantt-card:not(.is-right-only) .data-row.stage-row,
+  .gantt-card:not(.is-right-only) .bar-row.stage-bar-row {
+    height: calc(37px * var(--gantt-mobile-row-zoom, 1)) !important;
+    min-height: calc(37px * var(--gantt-mobile-row-zoom, 1)) !important;
+  }
+  .gantt-card.is-right-only .bar-row,
+  .gantt-card.is-right-only .stage-bar-row {
+    height: calc(26px * var(--gantt-mobile-row-zoom, 1)) !important;
+    min-height: calc(26px * var(--gantt-mobile-row-zoom, 1)) !important;
+  }
+}
